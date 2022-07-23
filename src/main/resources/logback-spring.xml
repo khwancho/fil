@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_FILE" value="${FIL_LOG_PATH:-out}/spring.log" />
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!-- logback-custom.xml is git-ignored (see .gitignore) -->
+    <include resource="./logback-custom.xml" />
+    <root level="INFO" />
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FIL_LOG_PATH:-out/logs}/fil-debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FIL_LOG_PATH:-out/logs}/fil-debug-%d{yyyyMMdd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1GB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-mm-dd HH:mm:ss.SSS} %-5level %-4relative [%thread] %logger{24} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="krx.lds.fil" level="debug">
+        <appender-ref ref="DEBUG" />
+    </logger>
+
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.audit" level="ERROR"/>
+    <logger name="jdbc.resultset" level="ERROR"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <logger name="jdbc.connection" level="ERROR"/>
+</configuration>

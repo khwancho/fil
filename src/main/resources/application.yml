@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  session:
+    timeout: 3600
+
+
+logging:
+  config: classpath:logback-spring.xml
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+
+
+spring:
+  application: fil-api
+
+#  profiles:
+#    active: real
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    open-in-view: false
+
+    properties:
+      #hibernate.dialect: org.hibernate.dialect.MySQL57Dialect
+      hibernate:
+        ddl-auto: none
+        #dialect: org.hibernate.dialect.MySQLInnoDBDialect
+        show_sql: false
+        format_sql: true
+        use_sql_comments: false
+        hbm2ddl:
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/testdb?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+      username: test
+      password: 1234
+#
+#  data:
+#    mongodb:
+#      host:
+#      port:
+#      database:
+#      username:
+#      password:
